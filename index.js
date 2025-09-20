@@ -1,33 +1,22 @@
+/* eslint-env node */
 
-// Utility Functions
-
-/**
- * Capitalizes the first letter of each word in the input string.
- * @param {string} input - The input string.
- * @returns {string} - The formatted string.
- */
 function capitalizeWords(input) {
-    return input.replace(/\b\w/g, char => char.toUpperCase());
+  if (typeof input !== 'string') return '';
+  return input
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(w => (w.length ? w[0].toUpperCase() + w.slice(1) : w)) // keep original casing after first char
+    .join(' ');
 }
 
-/**
- * Filters active users from the array.
- * @param {Array} users - An array of user objects.
- * @returns {Array} - An array of active user objects.
- */
 function filterActiveUsers(users) {
-    return users.filter(user => user.isActive);
+  if (!Array.isArray(users)) return [];
+  return users.filter(u => u && u.isActive === true);
 }
 
-/**
- * Logs an action performed by a user with a timestamp.
- * @param {string} action - The action performed.
- * @param {string} username - The name of the user.
- * @returns {string} - The log message.
- */
 function logAction(action, username) {
-    const timestamp = new Date().toISOString();
-    return `User ${username} performed ${action} at ${timestamp}`;
+  const ts = new Date().toISOString();
+  return `User ${username} performed ${action} at ${ts}`;
 }
 
 module.exports = { capitalizeWords, filterActiveUsers, logAction };
